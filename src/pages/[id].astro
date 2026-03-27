@@ -1,0 +1,26 @@
+---
+import type { GetStaticPaths } from "astro";
+import RootLayout from "@/shared/components/layouts/RootLayout.astro";
+import type { PostDetailItemProps } from "@/post/application/schemas";
+import PostDetail from "@/post/components/PostDetail.astro";
+import { container } from "@shared/infrastructure/container";
+
+type Props = {
+  post: PostDetailItemProps;
+};
+
+export const getStaticPaths = (async () => {
+  const posts = await container.getAllPostsAsDetailUseCase.execute();
+
+  return posts.map((post) => ({
+    params: { id: post.postId.toString() },
+    props: { post },
+  }));
+}) satisfies GetStaticPaths;
+
+const { post } = Astro.props;
+---
+
+<RootLayout title={`Post ${post.postId}`}>
+  <PostDetail post={post} />
+</RootLayout>

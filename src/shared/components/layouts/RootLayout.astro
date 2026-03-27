@@ -1,0 +1,30 @@
+---
+import "@styles/global.css";
+import { cn } from "@shared/lib/utils";
+
+type Props = {
+  title: string;
+  className?: string;
+};
+
+const { title, className } = Astro.props satisfies Props;
+---
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body
+    class={cn(
+      "min-h-dvh bg-amber-950 text-amber-100 flex flex-col relative",
+      className,
+    )}
+  >
+    <slot />
+  </body>
+</html>

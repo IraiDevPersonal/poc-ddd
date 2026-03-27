@@ -1,17 +1,20 @@
 ---
+import PostList from "@/post/components/PostList.astro";
+import RootLayout from "@/shared/components/layouts/RootLayout.astro";
+import { container } from "@shared/infrastructure/container";
 
+const posts = await container.getAllPostsAsListUseCase.execute();
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<RootLayout title="Posts">
+  <header
+    class="sticky top-0 bg-amber-900/40 backdrop-blur-md border-amber-800 border-b"
+  >
+    <div class="container mx-auto p-4">
+      <h1 class="text-5xl font-bold">Posts ({posts.length})</h1>
+    </div>
+  </header>
+  <main class="container mx-auto flex-1 my-10">
+    <PostList posts={posts} />
+  </main>
+</RootLayout>

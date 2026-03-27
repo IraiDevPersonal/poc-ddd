@@ -1,0 +1,21 @@
+---
+import type { PostListItemProps } from "../application/schemas";
+
+type Props = {
+  posts: PostListItemProps[];
+};
+
+const { posts } = Astro.props;
+---
+
+<ul class="list-decimal list-inside">
+  {
+    posts.map((post) => (
+      <li>
+        <a href={`/${post.postId}`}>
+          {post.title} post id: ({post.postId})
+        </a>
+      </li>
+    ))
+  }
+</ul>
