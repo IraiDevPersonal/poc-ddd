@@ -1,7 +1,12 @@
 import { z } from "astro/zod";
 import { ZodError } from "@/shared/lib/errors";
 import { ApiPostSchema } from "../schemas/post.schema";
-import type { ApiPost, PostDetail, PostListItem } from "../types/post.type";
+import type {
+  ApiPost,
+  PostDetailProps,
+  PostListItemProps,
+} from "../types/post.type";
+import type { GetStaticPathsResult } from "@/shared";
 
 export class PostMapper {
   static fromApiResponse(raw: unknown): ApiPost[] {
@@ -18,11 +23,11 @@ export class PostMapper {
     return data;
   }
 
-  static toListItem(post: ApiPost): PostListItem {
+  static toListItem(post: ApiPost): PostListItemProps {
     return { postId: post.id, title: post.title };
   }
 
-  static toDetail(post: ApiPost): PostDetail {
+  static toDetail(post: ApiPost): PostDetailProps {
     return {
       postId: post.id,
       title: post.title,

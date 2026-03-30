@@ -1,22 +1,16 @@
 ---
-import type { GetStaticPaths } from "astro";
+import type { PostDetailProps } from "@/post";
+import { PostDetailComponent } from "@/post";
+import { getPostsDetailsStaticPaths } from "@/post/services/post.helpers";
 import RootLayout from "@/shared/components/layouts/RootLayout.astro";
-import type { PostDetail } from "@/post/types/post.type";
-import PostDetailComponent from "@/post/components/PostDetail.astro";
-import { getPostDetails } from "@/post/services/post.service";
 
 type Props = {
-  post: PostDetail;
+  post: PostDetailProps;
 };
 
-export const getStaticPaths = (async () => {
-  const posts = await getPostDetails();
-
-  return posts.map((post) => ({
-    params: { id: post.postId.toString() },
-    props: { post },
-  }));
-}) satisfies GetStaticPaths;
+export async function getStaticPaths() {
+  return await getPostsDetailsStaticPaths();
+}
 
 const { post } = Astro.props;
 ---

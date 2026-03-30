@@ -3,12 +3,12 @@ import type { ApiPostSchema } from "../schemas/post.schema";
 
 export type ApiPost = z.infer<typeof ApiPostSchema>;
 
-export type PostListItem = {
+export type PostListItemProps = {
   postId: number;
   title: string;
 };
 
-export type PostDetail = {
+export type PostDetailProps = {
   postId: number;
   title: string;
   userId: number;
