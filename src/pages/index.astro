@@ -1,9 +1,9 @@
 ---
 import PostList from "@/post/components/PostList.astro";
 import RootLayout from "@/shared/components/layouts/RootLayout.astro";
-import { container } from "@shared/infrastructure/container";
+import { getPostList } from "@/post/services/post.service";
 
-const posts = await container.getAllPostsAsListUseCase.execute();
+const posts = await getPostList();
 ---
 
 <RootLayout title="Posts">
