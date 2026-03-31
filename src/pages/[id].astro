@@ -1,7 +1,9 @@
 ---
-import type { PostDetailProps } from "@/post";
-import { PostDetailComponent } from "@/post";
-import { getPostsDetailsStaticPaths } from "@/post/services/post.helpers";
+import {
+  getPostsDetailsStaticPaths,
+  PostDetail,
+  type PostDetailProps,
+} from "@/post";
 import RootLayout from "@/shared/components/layouts/RootLayout.astro";
 
 type Props = {
@@ -16,5 +18,5 @@ const { post } = Astro.props;
 ---
 
 <RootLayout title={`Post ${post.postId}`}>
-  <PostDetailComponent post={post} />
+  <PostDetail post={post} />
 </RootLayout>
