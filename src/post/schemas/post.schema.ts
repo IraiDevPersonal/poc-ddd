@@ -6,3 +6,5 @@ export const ApiPostSchema = z.object({
   title: z.string().min(1),
   body: z.string().optional(),
 });
+
+export const ApiPostListSchema = z.array(ApiPostSchema);

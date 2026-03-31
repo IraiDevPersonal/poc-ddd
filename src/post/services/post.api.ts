@@ -1,11 +1,20 @@
+import { ZodError } from "@/shared";
 import { apiClient } from "@/shared/client/api.client";
-import { PostMapper } from "../mappers/post.mapper";
+import { ApiPostListSchema } from "../schemas/post.schema";
 import type { ApiPost } from "../types/post.type";
 
 export async function fetchPosts(): Promise<ApiPost[]> {
   const response = await apiClient.get("/posts");
-  if (!response) return [];
+  const raw = await response?.json();
+  const { data, success, error } = ApiPostListSchema.safeParse(raw);
 
-  const raw = await response.json();
-  return PostMapper.fromApiResponse(raw);
+  if (!success) {
+    throw ZodError.buildError({
+      detail: ZodError.format(error, { asJson: true }),
+      message: "Respuesta de API inválida.",
+      from: "fetchPosts",
+    });
+  }
+
+  return data;
 }

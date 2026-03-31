@@ -6,4 +6,4 @@ export { cn } from "./lib/utils";
 export { ZodError } from "./lib/errors";
 
 // types
-export type { GetStaticPathsResult } from "./types/globals";
+export type { GetStaticPathsResult } from "./types/common.type";

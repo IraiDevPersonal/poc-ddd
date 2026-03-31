@@ -1,9 +1,11 @@
 import type { GetStaticPathsResult } from "@/shared";
 import { getPostsDetails, type PostDetailProps } from "..";
 
-export async function getPostsDetailsStaticPaths(): Promise<
-  GetStaticPathsResult<{ post: PostDetailProps }>[]
-> {
+type GetPostsDetailsStaticPaths = GetStaticPathsResult<{
+  post: PostDetailProps;
+}>[];
+
+export async function getPostsDetailsStaticPaths(): Promise<GetPostsDetailsStaticPaths> {
   const posts = await getPostsDetails();
   return posts.map((post) => ({
     params: { id: post.postId.toString() },
