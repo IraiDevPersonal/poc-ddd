@@ -1,6 +1,6 @@
-import { toDetailMapper, toListItemMapper } from "../mappers/post.mapper";
+import { toDetailMapper, toListItemMapper } from "../mappers";
 import type { PostDetailProps, PostListItemProps } from "../types/post.type";
-import type { PostRepository } from "../types/post.repository";
+import type { PostRepository } from "../repositories/post.repository";
 
 export class PostService {
   private readonly repository: PostRepository;

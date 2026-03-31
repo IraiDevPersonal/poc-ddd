@@ -1,8 +1,5 @@
 // services
-export {
-  getPostsList,
-  getPostsDetailsStaticPaths,
-} from "./services/post.helper";
+export { postContainer } from "./container";
 
 // components
 export { default as PostList } from "./components/PostList.astro";

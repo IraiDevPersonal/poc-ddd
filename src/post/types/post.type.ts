@@ -1,7 +1,9 @@
-import type { z } from "astro/zod";
-import type { ApiPostSchema } from "../schemas/post.schema";
-
-export type ApiPost = z.infer<typeof ApiPostSchema>;
+export type Post = {
+  id: number;
+  userId: number;
+  title: string;
+  body?: string;
+};
 
 export type PostListItemProps = {
   postId: number;

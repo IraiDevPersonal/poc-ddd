@@ -1,17 +1,13 @@
 ---
-import {
-  getPostsDetailsStaticPaths,
-  PostDetail,
-  type PostDetailProps,
-} from "@/post";
-import RootLayout from "@/shared/components/layouts/RootLayout.astro";
+import { postContainer, PostDetail, type PostDetailProps } from "@/post";
+import { RootLayout } from "@/shared";
 
 type Props = {
   post: PostDetailProps;
 };
 
 export async function getStaticPaths() {
-  return await getPostsDetailsStaticPaths();
+  return await postContainer.getPostsDetailsStaticPaths();
 }
 
 const { post } = Astro.props;

@@ -1,8 +1,8 @@
 ---
-import RootLayout from "@/shared/components/layouts/RootLayout.astro";
-import { getPostsList, PostList } from "@/post";
+import { RootLayout } from "@/shared";
+import { postContainer, PostList } from "@/post";
 
-const posts = await getPostsList();
+const posts = await postContainer.getPostsList();
 ---
 
 <RootLayout title="Posts">

@@ -16,6 +16,8 @@
     "@tailwindcss/vite": "^4.2.2",
     "astro": "^6.1.1",
     "clsx": "^2.1.1",
+    "graphql": "^16.13.2",
+    "graphql-request": "^7.4.0",
     "tailwind-merge": "^3.5.0",
     "tailwindcss": "^4.2.2",
     "typescript": "^6.0.2"
