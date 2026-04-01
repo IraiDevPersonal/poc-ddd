@@ -1,43 +1,105 @@
-# Astro Starter Kit: Minimal
+# POC — Domain-Driven Design con Astro
 
-```sh
-pnpm create astro@latest -- --template minimal
+Prueba de concepto que implementa principios de **Domain-Driven Design (DDD)** sobre una aplicación web moderna construida con Astro y TypeScript.
+
+El dominio de ejemplo es un sistema de posts que consume datos desde APIs externas (REST y GraphQL), aplica validación de esquemas, mapea modelos de dominio y separa responsabilidades en capas bien definidas.
+
+---
+
+## Stack
+
+| Capa            | Tecnología                       |
+| :-------------- | :------------------------------- |
+| Framework       | [Astro](https://astro.build) 6.1 |
+| Lenguaje        | TypeScript                       |
+| Estilos         | Tailwind CSS 4                   |
+| Validación      | Zod                              |
+| Cliente HTTP    | Fetch API (wrapper propio)       |
+| Cliente GraphQL | graphql-request                  |
+| Package manager | pnpm                             |
+| Node            | >= 22.12.0                       |
+
+---
+
+## Arquitectura
+
+El proyecto organiza el código en módulos por dominio. Cada módulo es auto-contenido y expone su API pública via `index.ts`.
+
+```
+src/
+├── pages/
+│   ├── index.astro          # Ruta /  → lista de posts
+│   └── [id].astro           # Ruta /:id → detalle de post
+│
+├── post/                    # Módulo de dominio: Post
+│   ├── components/          # Componentes de UI (PostList, PostDetail)
+│   ├── repositories/        # Interfaz + implementaciones (HTTP, GraphQL)
+│   ├── services/            # Lógica de negocio
+│   ├── schemas/             # Schemas Zod por fuente de datos
+│   ├── types/               # Tipos de dominio e infraestructura
+│   ├── mappers.ts           # Transformación de modelos externos → dominio
+│   ├── validators.ts        # Validación de respuestas de API
+│   ├── container.ts         # Contenedor de inyección de dependencias
+│   └── index.ts             # Exports públicos del módulo
+│
+└── shared/                  # Utilidades transversales
+    ├── components/layouts/  # Layout raíz
+    ├── client/              # Instancias de clientes HTTP y GraphQL
+    ├── lib/                 # HttpClient, utilidades, errores custom
+    └── types/               # Tipos comunes
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+### Patrones aplicados
 
-## 🚀 Project Structure
+- **Repository Pattern** — interfaz `PostRepository` con implementaciones intercambiables (`HttpPostRepository`, `GraphQLPostRepository`).
+- **Service Layer** — `PostService` coordina la lógica de negocio dependiendo del repositorio abstracto.
+- **Dependency Injection** — `PostContainer` inicializa y conecta dependencias.
+- **Mapper Pattern** — `mappers.ts` transforma respuestas de APIs externas al modelo de dominio.
+- **Schema Validation** — Zod valida en tiempo de ejecución las respuestas de las APIs antes de transformarlas.
+- **Custom Errors** — `HttpError` y `ZodError` con contexto del origen del fallo.
 
-Inside of your Astro project, you'll see the following folders and files:
+### Path aliases
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+| Alias       | Directorio     |
+| :---------- | :------------- |
+| `@/*`       | `src/*`        |
+| `@post/*`   | `src/post/*`   |
+| `@shared/*` | `src/shared/*` |
+| `@styles/*` | `src/styles/*` |
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+---
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## Fuentes de datos
 
-Any static assets, like images, can be placed in the `public/` directory.
+| Tipo    | URL                                  |
+| :------ | :----------------------------------- |
+| REST    | https://jsonplaceholder.typicode.com |
+| GraphQL | https://graphqlzero.almansi.me/api   |
 
-## 🧞 Commands
+La implementación activa se configura en [src/post/container.ts](src/post/container.ts). Por defecto usa el repositorio HTTP.
 
-All commands are run from the root of the project, from a terminal:
+---
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+## Documentación
 
-## 👀 Want to learn more?
+| Archivo | Contenido |
+| :--- | :--- |
+| [docs/architecture.md](docs/architecture.md) | Capas, flujo de datos y reglas de dependencia |
+| [docs/patterns.md](docs/patterns.md) | Patrones aplicados con ejemplos de código |
+| [docs/how-to-add-module.md](docs/how-to-add-module.md) | Guía paso a paso para crear un nuevo módulo de dominio |
+| [CLAUDE.md](CLAUDE.md) | Contexto para la IA: convenciones, reglas y qué evitar |
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+---
+
+## Comandos
+
+Todos los comandos se ejecutan desde la raíz del proyecto:
+
+| Comando                | Acción                                            |
+| :--------------------- | :------------------------------------------------ |
+| `pnpm install`         | Instala dependencias                              |
+| `pnpm dev`             | Inicia servidor de desarrollo en `localhost:4321` |
+| `pnpm build`           | Genera el sitio estático en `./dist/`             |
+| `pnpm preview`         | Vista previa del build de producción              |
+| `pnpm astro -- --help` | Ayuda del CLI de Astro                            |
+| `pnpm astro check`     | Valida el código TypeScript y Astro               |

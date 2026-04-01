@@ -1,6 +1,6 @@
 import { HttpError } from "./errors";
 
-type HttpClientConfig = {
+type FetchClientConfig = {
   defaultHeaders?: HeadersInit;
 };
 
@@ -12,11 +12,11 @@ type GetOptions<T> = {
   parseResponse?: (response: Response) => Promise<T>;
 } & RequestOptions;
 
-export class HttpClient {
+export class FetchClient {
   private readonly baseURL: string;
   private readonly defaultHeaders: Headers;
 
-  constructor(baseUrl: string, config?: HttpClientConfig) {
+  constructor(baseUrl: string, config?: FetchClientConfig) {
     this.baseURL = baseUrl;
     this.defaultHeaders = new Headers(config?.defaultHeaders);
   }
