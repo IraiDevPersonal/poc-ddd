@@ -76,7 +76,7 @@ export type HttpPost = { id: number; userId: number; ... };
 ### Errores
 - Solo dos tipos de error custom en el proyecto: `HttpError` y `ZodError`.
 - Ambos se importan desde `@/shared`.
-- `HttpClient` lanza `HttpError` automáticamente si `response.ok === false`.
+- `FetchClient` lanza `HttpError` automáticamente si `response.ok === false`.
 
 ### Shared
 - `src/shared/` no importa de ningún módulo de dominio.

@@ -230,16 +230,16 @@ Nunca importar directamente de sub-rutas de otro módulo (e.g. `@/post/services/
 
 ---
 
-## 8. HttpClient genérico
+## 8. FetchClient genérico
 
-`HttpClient` en `shared/lib/http-client.ts` es un wrapper sobre `fetch` que:
+`FetchClient` en `shared/lib/fetch-client.ts` es un wrapper sobre `fetch` que:
 - Recibe una `baseURL` en el constructor
 - Fusiona headers por defecto con los de cada llamada
 - Lanza `HttpError` automáticamente si `response.ok` es falso
 - Acepta un `parseResponse` custom por si se necesita algo distinto a `.json()`
 
 ```typescript
-const client = new HttpClient("https://api.example.com", {
+const client = new FetchClient("https://api.example.com", {
   defaultHeaders: { Authorization: "Bearer token" },
 });
 

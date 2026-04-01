@@ -53,7 +53,7 @@ El framework de renderizado es **Astro en modo SSG** (Static Site Generation): l
 - **`src/<module>/mappers.ts`** — Transforma modelos de infraestructura (e.g. `HttpPost`) al modelo de dominio (`Post`) y de dominio a props de presentación.
 
 ### Shared
-- **`src/shared/lib/http-client.ts`** — Clase `HttpClient` genérica con manejo de errores HTTP.
+- **`src/shared/lib/fetch-client.ts`** — Clase `FetchClient` genérica con manejo de errores HTTP.
 - **`src/shared/lib/errors/`** — Clases de error custom: `HttpError` y `ZodError`.
 - **`src/shared/client/`** — Instancias preconfiguradas de clientes (`apiClient`, `graphqlClient`).
 - **`src/shared/components/`** — Componentes reutilizables entre módulos (e.g. `RootLayout`).
@@ -97,7 +97,7 @@ pages/index.astro
     → PostService.getPostsList()
       → PostRepository.getAll()           ← interfaz
         → HttpPostRepository.getAll()     ← implementación concreta
-          → HttpClient.get("/posts")
+          → FetchClient.get("/posts")
           ← raw JSON response
         → PostValidators.validateHttpResponse(raw)
           → HttpPostResponseSchema.safeParse(raw)  ← Zod

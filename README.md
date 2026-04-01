@@ -45,7 +45,7 @@ src/
 └── shared/                  # Utilidades transversales
     ├── components/layouts/  # Layout raíz
     ├── client/              # Instancias de clientes HTTP y GraphQL
-    ├── lib/                 # HttpClient, utilidades, errores custom
+    ├── lib/                 # FetchClient, utilidades, errores custom
     └── types/               # Tipos comunes
 ```
 
